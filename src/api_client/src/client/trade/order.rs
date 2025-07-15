@@ -8,7 +8,7 @@ use crate::{
     client::config::Config,
 };
 
-use super::{get_trading_base_url, BoursoWebClient};
+use crate::client::{get_trading_base_url, BoursoWebClient};
 
 impl BoursoWebClient {
     /// Place an order
@@ -84,7 +84,7 @@ impl BoursoWebClient {
 
         self.check(&order_data).await?;
 
-        let response = self
+        let response: OrderConfirmResponse = self
             .confirm(&order_data.resource_id.as_ref().unwrap())
             .await?;
 

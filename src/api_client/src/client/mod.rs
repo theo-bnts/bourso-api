@@ -189,9 +189,7 @@ impl BoursoWebClient {
 
         self.challenge_id = virtual_pad::extract_challenge_token(&res)?;
 
-        self.virtual_pad_ids = virtual_pad::extract_data_matrix_keys(&res)?
-            .map(|key| key.to_string())
-            .to_vec();
+        self.virtual_pad_ids = virtual_pad::extract_data_matrix_keys(&res)?;
 
         Ok(())
     }
@@ -211,9 +209,7 @@ impl BoursoWebClient {
         use error::ClientError;
 
         self.customer_id = customer_id.to_string();
-        self.password =
-            virtual_pad::password_to_virtual_pad_keys(self.virtual_pad_ids.clone(), password)?
-                .join("|");
+        self.password = virtual_pad::password_to_virtual_pad_keys(self.virtual_pad_ids.clone(), password)?.as_str().unwrap().to_string();
         let data = reqwest::multipart::Form::new()
             .text("form[fakePassword]", "••••••••")
             .text("form[ajx]", "1")
