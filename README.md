@@ -12,8 +12,8 @@ This app aims to be a simple API powered by *[Bourso API](./src/bourso_api/)* to
 ### From source
 Requires [>=Rust 1.77.2](https://www.rust-lang.org)
 ```sh
-git clone git@github.com:theo-bnts/bourso-api.git
-cd bourso-api
+git clone git@github.com:theo-bnts/api.git
+cd api
 docker compose up -d --build
 ```
 

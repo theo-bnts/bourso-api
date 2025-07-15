@@ -5,7 +5,7 @@ use axum::{
     routing::{get, post},
     Json, Router,
 };
-use bourso_api::{
+use api_client::{
     account::{Account, AccountKind},
     client::{
         trade::{order::OrderSide, tick::QuoteTab},
@@ -110,7 +110,7 @@ async fn get_ticks(
     symbol: &str,
     length: Option<String>,
     interval: Option<String>,
-) -> Result<bourso_api::client::trade::tick::Ticks, AppError> {
+) -> Result<api_client::client::trade::tick::Ticks, AppError> {
     let web_client: BoursoWebClient = get_client();
 
     let quotes = web_client
@@ -125,7 +125,7 @@ async fn get_ticks(
 
 async fn get_quotes(
     Json(quote_request): Json<QuoteRequest>,
-) -> Result<Json<bourso_api::client::trade::tick::Ticks>, AppError> {
+) -> Result<Json<api_client::client::trade::tick::Ticks>, AppError> {
     let quotes = get_ticks(
         &quote_request.symbol,
         quote_request.length,
@@ -137,7 +137,7 @@ async fn get_quotes(
 
 async fn get_quote_by_symbol(
     Path(symbol): Path<String>,
-) -> Result<Json<bourso_api::client::trade::tick::Ticks>, AppError> {
+) -> Result<Json<api_client::client::trade::tick::Ticks>, AppError> {
     let quotes = get_ticks(&symbol, None, None).await?;
     Ok(Json(quotes))
 }
@@ -199,7 +199,7 @@ async fn create_order(Json(order_request): Json<OrderRequest>) -> Result<Json<()
 
 async fn get_positions(
     Json(position_request): Json<PositionRequest>,
-) -> Result<Json<Vec<bourso_api::client::trade::summary::Position>>, AppError> {
+) -> Result<Json<Vec<api_client::client::trade::summary::Position>>, AppError> {
     let mut web_client: BoursoWebClient = get_client();
     web_client.init_session().await?;
     web_client
@@ -230,13 +230,13 @@ async fn get_positions(
 // ... error handling ...
 #[derive(Debug)]
 enum AppError {
-    BoursoApiError(bourso_api::client::error::ClientError),
+    ApiClientError(api_client::client::error::ClientError),
     Anyhow(anyhow::Error),
 }
 
-impl From<bourso_api::client::error::ClientError> for AppError {
-    fn from(inner: bourso_api::client::error::ClientError) -> Self {
-        AppError::BoursoApiError(inner)
+impl From<api_client::client::error::ClientError> for AppError {
+    fn from(inner: api_client::client::error::ClientError) -> Self {
+        AppError::ApiClientError(inner)
     }
 }
 
@@ -255,10 +255,10 @@ impl From<std::num::ParseIntError> for AppError {
 impl IntoResponse for AppError {
     fn into_response(self) -> Response {
         let (status, error_message) = match self {
-            AppError::BoursoApiError(bourso_api::client::error::ClientError::MfaRequired) => {
+            AppError::ApiClientError(api_client::client::error::ClientError::MfaRequired) => {
                 (StatusCode::UNAUTHORIZED, "MFA required".to_string())
             }
-            AppError::BoursoApiError(err) => (
+            AppError::ApiClientError(err) => (
                 StatusCode::INTERNAL_SERVER_ERROR,
                 format!("An internal server error occurred: {}", err),
             ),

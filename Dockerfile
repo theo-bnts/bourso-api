@@ -10,6 +10,6 @@ RUN apt-get update -y \
     && apt-get install -y --no-install-recommends ca-certificates \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-COPY --from=builder /app/target/release/bourso-api /usr/local/bin/
+COPY --from=builder /app/target/release/api /usr/local/bin/
 EXPOSE 3000
-CMD ["/usr/local/bin/bourso-api"]
+CMD ["/usr/local/bin/api"]
