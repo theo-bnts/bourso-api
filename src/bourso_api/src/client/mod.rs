@@ -269,7 +269,7 @@ impl BoursoWebClient {
                                 bail!(r#"Boursobank has flagged this connection as suspicious.
                 You're likely trying to login from a new device or location.
                 Password authentication is not allowed in this case.
-                We're aware of this issue and are working on a fix (https://github.com/azerpas/bourso-api/pull/10).
+                We're aware of this issue and are working on a fix (https://github.com/theo-bnts/bourso-api/pull/10).
 
                 In the meantime, you can try to login to the website manually from your current location (ip address) to unblock the connection, and then retry here."#);
                  */
