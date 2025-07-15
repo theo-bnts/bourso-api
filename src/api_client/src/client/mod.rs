@@ -17,7 +17,7 @@ use serde::{Deserialize, Serialize};
 
 use self::config::{extract_brs_config, Config};
 
-use super::constants::BASE_URL;
+use crate::constants::BASE_URL;
 
 pub struct BoursoWebClient {
     /// The client used to make requests to the Bourso website.

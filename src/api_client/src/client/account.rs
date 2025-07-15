@@ -1,6 +1,6 @@
 use crate::{
     account::{AccountKind, Account},
-    crate::constants::{BASE_URL, SAVINGS_PATTERN, BANKING_PATTERN, TRADING_PATTERN, LOANS_PATTERN, ACCOUNT_PATTERN}
+    constants::{BASE_URL, SAVINGS_PATTERN, BANKING_PATTERN, TRADING_PATTERN, LOANS_PATTERN, ACCOUNT_PATTERN}
 };
 
 use super::BoursoWebClient;

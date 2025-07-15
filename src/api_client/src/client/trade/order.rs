@@ -115,18 +115,18 @@ impl BoursoWebClient {
 
         let status_code = response.status();
 
-        let response = response.text().await?;
+        let response_text = response.text().await?;
 
         if status_code != 200 {
             return Err(anyhow::anyhow!(
                 "Failed to get order prepare response: {}",
-                response
+                response_text
             ));
         }
 
-        let response: OrderPrepareResponse = serde_json::from_str(&response).context(format!(
+        let response: OrderPrepareResponse = serde_json::from_str(&response_text).context(format!(
             "Failed to parse order prepare response. Response: {}",
-            response
+            response_text
         ))?;
 
         Ok(response)
