@@ -1,5 +1,5 @@
 [package]
-name = "bourso-cli"
+name = "bourso"
 version = "0.2.0"
 edition = "2021"
 repository = "https://github.com/azerpas/bourso-api"
@@ -10,10 +10,9 @@ repository = "https://github.com/azerpas/bourso-api"
 bourso_api = { path = "./src/bourso_api" }
 tokio = { version = "1.33.0", features = ["full"] }
 anyhow = { version = "1.0.75" }
-clap = { version = "4.4.6" }
-rpassword = { version = "7.2.0" }
-directories = { version = "5.0.1" }
 serde = { version = "1.0.189", features = ["derive"] }
 serde_json = { version = "1.0.107" }
 log = { version = "0.4.20" }
 log4rs = { version = "1.3.0" }
+api = { path = "./src/api" }
+axum = "0.7.5"
