@@ -1,7 +1,9 @@
 services:
-  api:
-    image: bourso-api
-    build: .
-    container_name: bourso-api
+  boursobank_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: boursobank_api
+    container_name: boursobank_api
     ports:
       - 80:3000

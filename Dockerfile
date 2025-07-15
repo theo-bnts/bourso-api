@@ -1,6 +1,6 @@
 FROM rust:1.82-slim-bookworm as builder
 WORKDIR /app
-RUN apt-get update && apt-get install -y protobuf-compiler
+RUN apt-get update && apt-get install -y protobuf-compiler pkg-config libssl-dev
 COPY . .
 RUN cargo build --release
 

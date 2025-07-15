@@ -1,6 +1,6 @@
-# Bourso API
+# BoursoBank API
 
-This app aims to be a simple API powered by *[Bourso API](./src/bourso_api/)* to log in to your [BoursoBank/Boursorama](https://www.boursorama.com) account and achieve some basic tasks.
+This app aims to be a simple API powered by *[Bourso API](./src/bourso_api/)* to log in to your [BoursoBank](https://www.boursobank.com) account and achieve some basic tasks.
 
 - [Installation](#installation)
   - [From source](#from-source)
