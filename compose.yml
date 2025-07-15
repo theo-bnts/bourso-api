@@ -1,5 +1,6 @@
 services:
   api:
+    image: bourso-api
     build: .
     ports:
       - "80:3000"
