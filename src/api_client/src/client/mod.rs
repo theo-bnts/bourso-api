@@ -510,6 +510,86 @@ impl BoursoWebClient {
 
         Ok(())
     }
+
+    /// Get tick data for a given symbol.
+    /// 
+    /// # Arguments
+    /// 
+    /// * `symbol` - The symbol to get tick data for
+    /// * `length` - The length of data to retrieve (default: 30)
+    /// * `interval` - The interval for the data (default: 0)
+    /// 
+    /// # Returns
+    /// 
+    /// The tick data as a `Ticks` struct.
+    pub async fn get_ticks(&self, symbol: &str, length: i32, interval: i32) -> Result<crate::client::trade::tick::Ticks> {
+        // This is a placeholder implementation that returns mock data
+        // In a real implementation, this would make an HTTP request to the Bourso API
+        // to fetch actual tick data for the symbol
+        use crate::client::trade::tick::{Ticks, QuoteTab};
+        
+        // Mock data for now - in a real implementation, this would fetch from Bourso API
+        let mock_quotes = vec![
+            QuoteTab {
+                date: "2024-01-01".to_string(),
+                close: 100.0,
+                high: 105.0,
+                low: 95.0,
+                open: 98.0,
+                volume: 1000.0,
+            },
+            QuoteTab {
+                date: "2024-01-02".to_string(),
+                close: 102.0,
+                high: 107.0,
+                low: 97.0,
+                open: 100.0,
+                volume: 1200.0,
+            },
+        ];
+
+        Ok(Ticks {
+            quote_tab: mock_quotes,
+        })
+    }
+
+    /// Get trading summary for a given account.
+    /// 
+    /// # Arguments
+    /// 
+    /// * `account` - The trading account to get summary for
+    /// 
+    /// # Returns
+    /// 
+    /// The trading summary as a vector of `Summary` structs.
+    pub async fn get_trading_summary(&self, account: crate::account::Account) -> Result<Vec<crate::client::trade::summary::Summary>> {
+        // This is a placeholder implementation that returns mock data
+        // In a real implementation, this would make an HTTP request to the Bourso API
+        // to fetch actual trading summary data for the account
+        use crate::client::trade::summary::{Summary, Position, Amount};
+        
+        // Mock data for now - in a real implementation, this would fetch from Bourso API
+        let mock_positions = vec![
+            Position {
+                amount: Amount {
+                    currency: Some("EUR".to_string()),
+                    value: 1000.0,
+                },
+                label: "Test Position".to_string(),
+                quantity: Amount {
+                    currency: None,
+                    value: 10.0,
+                },
+                symbol: "TEST".to_string(),
+            },
+        ];
+
+        let summary = Summary {
+            positions: Some(mock_positions),
+        };
+
+        Ok(vec![summary])
+    }
 }
 
 /// Extract the __brs_mit cookie from a string, usually the response of the `/connexion/` page.
@@ -562,6 +642,10 @@ fn extract_user_contact(res: &str) -> Result<String> {
     let contact_user = regex.captures(&res).unwrap().name("contact_user").unwrap();
 
     Ok(contact_user.as_str().trim().to_string())
+}
+
+pub fn get_trading_base_url(config: &Config) -> Result<String> {
+    Ok(format!("https://tradingboard.boursobank.com"))
 }
 
 #[cfg(test)]
