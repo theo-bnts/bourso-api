@@ -1,5 +1,5 @@
 use axum::{
-    extract::{Path, State},
+    extract::Path,
     http::StatusCode,
     response::{IntoResponse, Response},
     routing::{get, post},
@@ -13,8 +13,7 @@ use api_client::{
     },
     get_client,
 };
-use serde::{Deserialize, Serialize};
-use std::sync::Arc;
+use serde::Deserialize;
 
 #[derive(Deserialize)]
 pub struct Credentials {
@@ -144,27 +143,27 @@ async fn get_quote_by_symbol(
 
 async fn get_highest_quote(Path(symbol): Path<String>) -> Result<Json<f64>, AppError> {
     let quotes = get_ticks(&symbol, None, None).await?;
-    Ok(Json(quotes.d.get_highest_value().unwrap_or(0.0)))
+    Ok(Json(quotes.get_highest_value().unwrap_or(0.0)))
 }
 
 async fn get_lowest_quote(Path(symbol): Path<String>) -> Result<Json<f64>, AppError> {
     let quotes = get_ticks(&symbol, None, None).await?;
-    Ok(Json(quotes.d.get_lowest_value().unwrap_or(0.0)))
+    Ok(Json(quotes.get_lowest_value().unwrap_or(0.0)))
 }
 
 async fn get_average_quote(Path(symbol): Path<String>) -> Result<Json<f64>, AppError> {
     let quotes = get_ticks(&symbol, None, None).await?;
-    Ok(Json(quotes.d.get_average_value().unwrap_or(0.0)))
+    Ok(Json(quotes.get_average_value().unwrap_or(0.0)))
 }
 
 async fn get_volume(Path(symbol): Path<String>) -> Result<Json<f64>, AppError> {
     let quotes = get_ticks(&symbol, None, None).await?;
-    Ok(Json(quotes.d.get_volume().unwrap_or(0.0)))
+    Ok(Json(quotes.get_volume().unwrap_or(0.0)))
 }
 
 async fn get_last_quote(Path(symbol): Path<String>) -> Result<Json<QuoteTab>, AppError> {
     let quotes = get_ticks(&symbol, None, None).await?;
-    let last_quote = quotes.d.get_last_quote().unwrap();
+    let last_quote = quotes.get_last_quote().unwrap();
     Ok(Json(last_quote))
 }
 
